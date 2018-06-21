@@ -1,0 +1,32 @@
+<ion-header>
+
+    <ion-navbar color="danger">
+    <ion-title>
+      Iniciar Sesion
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+  <form (submit)="doLogin()">
+    <ion-list>
+
+      <ion-item>
+        <ion-label fixed>Cuenta</ion-label>
+        <ion-input type="email" name="email"></ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label fixed>Password</ion-label>
+        <ion-input type="password" name="password"></ion-input>
+      </ion-item>
+
+      <div padding>
+        <button ion-button color="primary" block>Ingresar</button>
+        <button ion-button color="primary" block>Cancelar</button>
+      </div>
+
+    </ion-list>
+  </form>
+</ion-content>

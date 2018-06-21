@@ -1,44 +1,46 @@
+import { UsuarioServicio } from './../providers/usuario/usuario';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { TabsPage } from './../pages/tabs/tabs';
+import { LoginPage } from './../pages/login/login';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
+  rootPage: any ;
+  public pages :Array<{titulo: string, component?: any, icon: string}>;
 
-  rootPage: any = HomePage;
-
-  pages: Array<{title: string, component: any}>;
-
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-    this.initializeApp();
-
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
-    ];
-
+  constructor(public platform: Platform, 
+              public statusBar: StatusBar, 
+              public splashScreen: SplashScreen,
+              private us : UsuarioServicio) {
+              
+      this.us.cargar_storage().then( ()=>{
+        if(this.us.codigo) {
+          this.rootPage = TabsPage
+        }else{
+           this.rootPage = LoginPage;
+        }
+        platform.ready().then(() => {
+          statusBar.styleDefault();
+          splashScreen.hide();
+        });
+        this.pages = [
+          {titulo: 'Pedidos', component: TabsPage, icon: 'archive'}
+       //   {titulo: 'Perfil', component: LoginPage, icon: 'person' }
+        ];
+      })
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
+  goToPage(page){
+    this.nav.setRoot(page);
   }
-
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+  cerrar(){
+    this.us.borrar_usuario();
+    this.nav.setRoot(LoginPage);
   }
 }

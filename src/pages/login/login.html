@@ -1,0 +1,25 @@
+<ion-header>
+      <ion-title>
+          
+      </ion-title>
+</ion-header>
+<ion-content scroll="false">
+    <div class="splash-bg"></div>
+  <div padding>
+          <ion-list>
+              <h2 class="slide-title">Ingrese su clave</h2>
+              <p>Para continuar, debe de ingresar su código</p>
+                <ion-item>
+                    <ion-label color="danger">Clave</ion-label>
+                    <ion-input placeholder="Ingrese su clave"type="text" [(ngModel)]="clave"
+                    (keyup.enter)="doLogin()"></ion-input>
+                  </ion-item>
+            <div padding>
+              <button ion-button color="danger" block
+              [disabled]="clave.length < 3"
+              (click)="doLogin()">Ingresar</button>
+            </div>
+          </ion-list>
+      
+  </div>
+</ion-content>

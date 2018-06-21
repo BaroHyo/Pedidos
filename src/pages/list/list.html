@@ -1,23 +1,28 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="danger">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title>Entregas</ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown"
+        pullingText="Deslice Abajo para Actualizar"
+        refreshingSpinner="circles"
+        refreshingText="Actualizando...">        
+        </ion-refresher-content>
+    </ion-refresher>
+  <ion-list inset>
+    <ion-item *ngFor="let pedido of pedidosList">
+      <ion-thumbnail item-start>
+         <img src="assets/img/farmacoorp.png">
+      </ion-thumbnail>
+      <p>{{pedido.codigo}}</p>
+      <p>{{pedido.nombre_sucursal}}</p>
+      <p>{{pedido.direccion}}</p>
+      <button ion-button item-end outlin (click)="accion(pedido.pedidoID)">Accion</button>
+    </ion-item>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
 </ion-content>

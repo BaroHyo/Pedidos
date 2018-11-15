@@ -45,6 +45,7 @@ export class LoginPage {
           }).present();
         }
       }).catch( error=>{
+      ///prueba
         loading.dismiss();
         console.log("ERROR en verifica_usuario: " + JSON.stringify( error ));
     })
